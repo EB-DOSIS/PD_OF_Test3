@@ -7,4 +7,4 @@ The initial publiching date is the 25.11.2020.
 The creators of this project are Dr. Eyck Blank (Ruppiner Kliniken, Neuruppin / Germany)
 and Maximilian Grohmann (UKE Hamburg / Germany).
 
-In this project the plot library Plotlib by Joan Castelo was used, many thanks to him!
+In this project the plot library Plotly by Joan Castelo was used, many thanks to him!
