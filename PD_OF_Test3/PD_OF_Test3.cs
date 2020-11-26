@@ -1,12 +1,12 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+ Auswertung der Offenfeld EPIDS  für TB2258  VB4434  CL4160
+//+ Auswertung der Offenfeld EPIDS  fÃ¼r TB2258  VB4434  CL4160
 //+ nutzt TestPatient 772016_OF_An_2258 etc
 //+ Plan OF_2258_2020_II etc
 //+ Feld OF_2258_X6 etc
 //+ nutzt Excel Dateien PD_OF_Test3_2258.xlsx etc
 //+ created by Eyck Blank
 //+ assisted by Maximilian Grohmann
-//+ 13.10.2020 FindFirst() Problem gelöst
+//+ 13.10.2020 FindFirst() Problem gelÃ¶st
 //+ 15.10.2020 CL4160 eingebunden
 //+ 16.11.2020 mit Marian Grafik zum Laufen gebracht
 //+ 17.11.2020 mit Marian Grafiken und Layout optimiert
@@ -102,7 +102,7 @@ namespace VMS.DV.PD.Scripting
                     int laengst = 280;
                     String  Name1;
                                         
-                    // wegen untersch Kassettengrößen von Clinac und TrueBeam
+                    // wegen untersch KassettengrÃ¶ÃŸen von Clinac und TrueBeam
                     // Verkomlizierung da bei 4160 die Felder Feld1 heissen
                     if (FName == "OF_4160_X6")
                     {
@@ -319,7 +319,7 @@ namespace VMS.DV.PD.Scripting
             <head> 
                 <meta charset=utf-8> 
                 <title>Plot.ly 2D</title> 
-                <script src='Q:/ESAPI/Projects/PD_OF_Test3/Projects/PD_OF_Test3/test.js'></script> 
+                <script src='Q:/ESAPI/Projects/PD_OF_Test3/test.js'></script> 
             </head> 
   
             <body> 
@@ -353,9 +353,9 @@ namespace VMS.DV.PD.Scripting
                 var chartX = document.getElementById('chartX'); 
                 var layoutX = {
                         xaxis: {title: 'Profil mm'},  
-                        yaxis: {title: 'Intensität'},
+                        yaxis: {title: 'IntensitÃ¤t'},
                         autosize: false,
-                        width: 1200,
+                        width: 1100,
                         height: 500,
                         title: 'Crossplane Querprofil',
                         margin: 
@@ -383,7 +383,7 @@ namespace VMS.DV.PD.Scripting
                     var posYXp = @" 
                     marker: {color:'blue',size: 12,  line:{color:'blue',width: 0.5}},
                     mode: 'lines',
-                    name: 'Predictred',
+                    name: 'Predicted',
                     type: 'scatter2d' 
                 }; 
                                                
@@ -398,9 +398,9 @@ namespace VMS.DV.PD.Scripting
                 var chartY = document.getElementById('chartY'); 
                 var layoutY =  {
                         xaxis: {title: 'Profil mm'},  
-                        yaxis: {title: 'Intensität'},
+                        yaxis: {title: 'IntensitÃ¤t'},
                         autosize: false,
-                        width: 1200,
+                        width: 1100,
                         height: 500,
                         title: 'Inplane Querprofil',
                         margin: 
