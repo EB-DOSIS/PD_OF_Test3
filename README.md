@@ -8,4 +8,6 @@ The creators of this project are Dr. Eyck Blank (Ruppiner Kliniken, Neuruppin / 
 and Maximilian Grohmann (UKE Hamburg / Germany).
 Many thanks für coding assistance to Marian Krüger (Ruppiner Kliniken, Neuruppin / Germany)!
 
+This plugin needs MS Excel and a special Excel file for proper operation.
+
 In this project the plot library Plotly by Joao Castelo was used, many thanks to him!
