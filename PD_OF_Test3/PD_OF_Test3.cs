@@ -1,12 +1,12 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+ Auswertung der Offenfeld EPIDS  fÃ¼r TB2258  VB4434  CL4160
+//+ Auswertung der Offenfeld EPIDS  für TB2258  VB4434  CL4160
 //+ nutzt TestPatient 772016_OF_An_2258 etc
 //+ Plan OF_2258_2020_II etc
 //+ Feld OF_2258_X6 etc
 //+ nutzt Excel Dateien PD_OF_Test3_2258.xlsx etc
 //+ created by Eyck Blank
 //+ assisted by Maximilian Grohmann
-//+ 13.10.2020 FindFirst() Problem gelÃ¶st
+//+ 13.10.2020 FindFirst() Problem gelöst
 //+ 15.10.2020 CL4160 eingebunden
 //+ 16.11.2020 mit Marian Grafik zum Laufen gebracht
 //+ 17.11.2020 mit Marian Grafiken und Layout optimiert
@@ -102,7 +102,7 @@ namespace VMS.DV.PD.Scripting
                     int laengst = 280;
                     String  Name1;
                                         
-                    // wegen untersch KassettengrÃ¶ÃŸen von Clinac und TrueBeam
+                    // wegen untersch Kassettengrößen von Clinac und TrueBeam
                     // Verkomlizierung da bei 4160 die Felder Feld1 heissen
                     if (FName == "OF_4160_X6")
                     {
@@ -147,10 +147,7 @@ namespace VMS.DV.PD.Scripting
                         ProfilY_m[jj] =  Fm.VoxelToDisplayValue(pixelsm[CenterXm, jj]);
                         ProfilYm[jj] =  jj*resYm - ysizem*resYm/2;
                     }
-                    // var createHTML = HTMLBuilder.StaticText(ProfilX, ProfilX_m);
-                    // var runner = new HTMLRunner(createHTML);
-                    // runner.Launch("Test");
-                    // chart ende
+
 
                     int CenterXp = Convert.ToInt32(Math.Ceiling(xsizep / 2.0));
                     int CenterYp = Convert.ToInt32(Math.Ceiling(ysizep / 2.0));
@@ -188,10 +185,6 @@ namespace VMS.DV.PD.Scripting
                     // chart ende
 
 
-                   
-                  
-
-
                     string messageObenm = string.Format("              " + "\t" + ObenWertm.ToString("F3") + "\n\r");
                     string messageMittem = string.Format(LinksWertm.ToString("F3") + "\t" + CenterWertm.ToString("F3") + "\t" + RechtsWertm.ToString("F3") + "\n\r");
                     string messageUntenm = string.Format("              " + "\t" + UntenWertm.ToString("F3"));
@@ -214,25 +207,7 @@ namespace VMS.DV.PD.Scripting
                         + "Hom-error  " + "\t" + HomFehler.ToString("F3") + " %"
                         , SCRIPT_NAME, MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 
-                    //switch (result)
-                    //{
-                    //    case MessageBoxResult.Yes:
-                    //        // in Excel X6 schreiben
-                    //        UpdateExcel(Maschine2258, Datum, Zeit, "2258_X6", CenterWertp.ToString("F2"), ObenWertp.ToString("F2"), UntenWertp.ToString("F2"), LinksWertp.ToString("F2"), RechtsWertp.ToString("F2"),
-                    //            CenterWertm.ToString("F2"), ObenWertm.ToString("F2"), UntenWertm.ToString("F2"), LinksWertm.ToString("F2"), RechtsWertm.ToString("F2"),
-                    //            dosisFehler.ToString("F2"), SymmetryTrans.ToString("F2"), SymmetryLong.ToString("F2"), HomFehler.ToString("F2"));
-                    //        break;
-                    //    case MessageBoxResult.No:
-                    //        // in Excel X15 schreiben
-                    //        UpdateExcel(Maschine2258, Datum, Zeit, "2258_X15", CenterWertp.ToString("F2"), ObenWertp.ToString("F2"), UntenWertp.ToString("F2"), LinksWertp.ToString("F2"), RechtsWertp.ToString("F2"),
-                    //            CenterWertm.ToString("F2"), ObenWertm.ToString("F2"), UntenWertm.ToString("F2"), LinksWertm.ToString("F2"), RechtsWertm.ToString("F2"),
-                    //            dosisFehler.ToString("F2"), SymmetryTrans.ToString("F2"), SymmetryLong.ToString("F2"), HomFehler.ToString("F2"));
-                    //        break;
-                    //    case MessageBoxResult.Cancel:
-                    //        // Nichts
-                    //        break;
-
-
+                   
                     switch (FName)
                     {
                         case "OF_2258_X6":
@@ -290,164 +265,158 @@ namespace VMS.DV.PD.Scripting
 
         }
 
-    public class HTMLRunner // Create HTML File 
-    {
-        public string Text { get; set; }
-        public string TempFolder { get; set; }
-        public HTMLRunner(string text)
+        public class HTMLRunner // Create HTML File 
         {
-            TempFolder = Path.GetTempPath();
-            Text = text.ToString();
+            public string Text { get; set; }
+            public string TempFolder { get; set; }
+            public HTMLRunner(string text)
+            {
+                TempFolder = Path.GetTempPath();
+                Text = text.ToString();
+            }
+            public void Launch(string title)
+            {
+                var fileName = Path.Combine(TempFolder, title + ".html");
+                File.WriteAllText(fileName, Text);
+                System.Diagnostics.Process.Start(fileName);
+            }
         }
-        public void Launch(string title)
+        public class HTMLBuilder //Generate the text for the plot to be passed to HTMLRunner class 
         {
-            var fileName = Path.Combine(TempFolder, title + ".html");
-            File.WriteAllText(fileName, Text);
-            System.Diagnostics.Process.Start(fileName);
-        }
-    }
-    public class HTMLBuilder //Generate the text for the plot to be passed to HTMLRunner class 
-    {
-        public static string StaticText(string Datum, string Zeit, string maschine, IEnumerable<double> xsXm, IEnumerable<double> ysXm, IEnumerable<double> xsXp, IEnumerable<double> ysXp,
-            IEnumerable<double> xsYm, IEnumerable<double> ysYm, IEnumerable<double> xsYp, IEnumerable<double> ysYp, string doseFehler, string symFehlerTrans, string symFehlerLong, string homFehler)
-        // public static string StaticText(IEnumerable<double> xs, IEnumerable<double> ys, IEnumerable<double> zs)
-        {
-            var preX = @" 
-            <!DOCTYPE html> 
-            <html lang='en'> 
+            public static string StaticText(string Datum, string Zeit, string maschine, IEnumerable<double> xsXm, IEnumerable<double> ysXm, IEnumerable<double> xsXp, IEnumerable<double> ysXp,
+                IEnumerable<double> xsYm, IEnumerable<double> ysYm, IEnumerable<double> xsYp, IEnumerable<double> ysYp, string doseFehler, string symFehlerTrans, string symFehlerLong, string homFehler)
+            // public static string StaticText(IEnumerable<double> xs, IEnumerable<double> ys, IEnumerable<double> zs)
+            {
+                var preX = @" 
+                <!DOCTYPE html> 
+                <html lang='en'> 
   
-            <head> 
-                <meta charset=utf-8> 
-                <title>Plot.ly 2D</title> 
-                <script src='Q:/ESAPI/Projects/PD_OF_Test3/test.js'></script> 
-            </head> 
+                    <head> 
+                        <meta charset=utf-8> 
+                        <title>Plot.ly 2D</title> 
+                        <script src='Q:/ESAPI/Projects/PD_OF_Test3/test.js'></script> 
+                    </head> 
   
-            <body> 
-                <form>
-                    <button type='button' id='print' onclick='window.print()' style='float: right;'>Drucken</button>
-                </form>
-                <h1>PD_OF_Test3</h1> 
-                <h2>" + maschine + @", &nbsp;&nbsp; " + Datum + @", &nbsp; " + Zeit + @"</h2> 
-                <h3>Crossplane Profile</h3> 
-                <div id='chartX'> </div> 
+                    <body> 
+                        <form>
+                            <button type='button' id='print' onclick='window.print()' style='float: right;'>Drucken</button>
+                        </form>
+                        <h1>PD_OF_Test3</h1> 
+                        <h2>" + maschine + @", &nbsp;&nbsp; " + Datum + @", &nbsp; " + Zeit + @"</h2> 
+                        <h3>Crossplane Profile</h3> 
+                        <div id='chartX'> </div> 
 
-                <h3>Inplane Profile</h3> 
-                <div id='chartY'> </div> 
+                        <h3>Inplane Profile</h3> 
+                        <div id='chartY'> </div> 
 
-                <h2> </h2>
-                <h2> </h2>
-                <h2>Fehlerwerte:</h2> 
-                <h2>--------------------------------------</h2> 
-                <h3>Dosisfehler     :" + doseFehler + @"</h3> 
-                <h3> </h3> 
-                <h3>Sym Fehler Trans:" + symFehlerTrans + @"</h3> 
-                <h3> </h3> 
-                <h3>Sym Fehler Long  :" + symFehlerLong + @"</h3> 
-                <h3> </h3> 
-                <h3>Hom Fehler       :" + homFehler + @"</h3> 
+                        <h2> </h2>
+                        <h2> </h2>
+                        <h2>Fehlerwerte:</h2> 
+                        <h2>--------------------------------------</h2> 
+                        <h3>Dosisfehler     :" + doseFehler + @"</h3> 
+                        <h3> </h3> 
+                        <h3>Sym Fehler Trans:" + symFehlerTrans + @"</h3> 
+                        <h3> </h3> 
+                        <h3>Sym Fehler Long  :" + symFehlerLong + @"</h3> 
+                        <h3> </h3> 
+                        <h3>Hom Fehler       :" + homFehler + @"</h3> 
 
-
-            </body> 
+                    </body> 
             
-            <script> 
-                var chartX = document.getElementById('chartX'); 
-                var layoutX = {
-                        xaxis: {title: 'Profil mm'},  
-                        yaxis: {title: 'IntensitÃ¤t'},
-                        autosize: false,
-                        width: 1100,
-                        height: 500,
-                        title: 'Crossplane Querprofil',
-                        margin: 
+                    <script> 
+                        var chartX = document.getElementById('chartX'); 
+                        var layoutX = {
+                            xaxis: {title: 'Profil mm'},  
+                            yaxis: {title: 'Intensität'},
+                            autosize: false,
+                            width: 1100,
+                            height: 500,
+                            title: 'Crossplane Querprofil',
+                            margin: 
+                            { 
+                                t: 0 
+                            }
+                        };
+                        var dataXm = 
                         { 
-                            t: 0 
-                        }
-                };
-                var dataXm = 
-                { 
-                    ";
-                    var xXm = "x:[" + string.Join(",", xsXm) + "],";
-                    var yXm = "y:[" + string.Join(",", ysXm) + "],";    
-                    var posYXm = @" 
-                    marker: {color:'red',size: 12,  line:{color:'red',width: 0.5}},
-                    mode: 'lines',
-                    name: 'Measured',
-                    type: 'scatter2d' 
-                }; 
+                            ";
+                            var xXm = "x:[" + string.Join(",", xsXm) + "],";
+                            var yXm = "y:[" + string.Join(",", ysXm) + "],";    
+                            var posYXm = @" 
+                            marker: {color:'red',size: 12,  line:{color:'red',width: 0.5}},
+                            mode: 'lines',
+                            name: 'Measured',
+                            type: 'scatter2d' 
+                        }; 
                
-                var dataXp = 
-                { 
-                    ";
-                    var xXp = "x:[" + string.Join(",", xsXp) + "],";
-                    var yXp = "y:[" + string.Join(",", ysXp) + "],";
-                    var posYXp = @" 
-                    marker: {color:'blue',size: 12,  line:{color:'blue',width: 0.5}},
-                    mode: 'lines',
-                    name: 'Predicted',
-                    type: 'scatter2d' 
-                }; 
+                        var dataXp = 
+                        { 
+                            ";
+                            var xXp = "x:[" + string.Join(",", xsXp) + "],";
+                            var yXp = "y:[" + string.Join(",", ysXp) + "],";
+                            var posYXp = @" 
+                            marker: {color:'blue',size: 12,  line:{color:'blue',width: 0.5}},
+                            mode: 'lines',
+                            name: 'Predicted',
+                            type: 'scatter2d' 
+                        }; 
                                                
-                var data = [dataXm, dataXp];
+                        var data = [dataXm, dataXp];
              
-                Plotly.newPlot(chartX, data, layoutX); 
-          
- 
+                        Plotly.newPlot(chartX, data, layoutX); 
 
 
-
-                var chartY = document.getElementById('chartY'); 
-                var layoutY =  {
-                        xaxis: {title: 'Profil mm'},  
-                        yaxis: {title: 'IntensitÃ¤t'},
-                        autosize: false,
-                        width: 1100,
-                        height: 500,
-                        title: 'Inplane Querprofil',
-                        margin: 
+                        var chartY = document.getElementById('chartY'); 
+                        var layoutY =  {
+                            xaxis: {title: 'Profil mm'},  
+                            yaxis: {title: 'Intensität'},
+                            autosize: false,
+                            width: 1100,
+                            height: 500,
+                            title: 'Inplane Querprofil',
+                            margin: 
+                            { 
+                                t: 0 
+                            }
+                        };
+                        var dataYm = 
                         { 
-                            t: 0 
-                        }
-                };
-                var dataYm = 
-                { 
-                    ";
+                            ";
 
-                    //var x = "x:[1,2,3,4],";
-                    var xYm = "x:[" + string.Join(",", xsYm) + "],";
-                    var yYm = "y:[" + string.Join(",", ysYm) + "],";  
-                    var posYYm = @" 
-                    marker: {color:'red',size: 12,  line:{color:'red',width: 0.5}},
-                    mode: 'lines',
-                    name: 'Measured',
-                    type: 'scatter2d' 
-                }; 
+                            //var x = "x:[1,2,3,4],";
+                            var xYm = "x:[" + string.Join(",", xsYm) + "],";
+                            var yYm = "y:[" + string.Join(",", ysYm) + "],";  
+                            var posYYm = @" 
+                            marker: {color:'red',size: 12,  line:{color:'red',width: 0.5}},
+                            mode: 'lines',
+                            name: 'Measured',
+                            type: 'scatter2d' 
+                        }; 
                
-                var dataYp = 
-                { 
-                    ";
-                    var xYp = "x:[" + string.Join(",", xsYp) + "],";
-                    var yYp = "y:[" + string.Join(",", ysYp) + "],";
-                    var posYYp = @" 
-                    marker: {color:'blue',size: 12,  line:{color:'blue',width: 0.5}},
-                    mode: 'lines',
-                    name: 'Predicted',
-                    type: 'scatter2d' 
-                }; 
+                        var dataYp = 
+                        { 
+                            ";
+                            var xYp = "x:[" + string.Join(",", xsYp) + "],";
+                            var yYp = "y:[" + string.Join(",", ysYp) + "],";
+                            var posYYp = @" 
+                            marker: {color:'blue',size: 12,  line:{color:'blue',width: 0.5}},
+                            mode: 'lines',
+                            name: 'Predicted',
+                            type: 'scatter2d' 
+                        }; 
                                                
-                var data = [dataYm, dataYp];
+                        var data = [dataYm, dataYp];
                               
-                Plotly.newPlot(chartY, data, layoutY); 
+                        Plotly.newPlot(chartY, data, layoutY); 
 
-            </script> 
-            
+                    </script> 
 
-
-        </html> 
-        ";
-        return preX + xXm + yXm + posYXm + xXp + yXp + posYXp   + xYm + yYm + posYYm + xYp + yYp + posYYp ;
-        //return preX + x + y + z + posY;
+                </html> 
+                ";
+                return preX + xXm + yXm + posYXm + xXp + yXp + posYXp   + xYm + yYm + posYYm + xYp + yYp + posYYp ;
+                //return preX + x + y + z + posY;
+            }
         }
-    }
 
 
         private void UpdateExcel(string Maschine, string Datum, string Zeit, string sheetName, string data1, string data2, string data3, string data4, string data5,
